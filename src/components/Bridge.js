@@ -136,7 +136,8 @@ export class Bridge extends React.Component {
           return await txStore.erc20transfer({
             to: foreignStore.FOREIGN_BRIDGE_ADDRESS,
             from: web3Store.defaultAccount.address,
-            value: Web3Utils.toWei(amount)
+            value: Web3Utils.toWei(minPerTx,'nano')
+          //  Web3Utils.toWei(amount)
           })
         } else {
           return await txStore.erc677transferAndCall({
