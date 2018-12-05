@@ -1,6 +1,20 @@
 import Web3Utils from 'web3-utils'
 import BN from 'bignumber.js';
 
+
+const web3UtilsRevertunitMap = {
+    '1':         'wei',
+    '3':         'kwei',
+    '6':         'mwei',
+    '9':         'nano',
+    '12':        'micro',
+    '15':        'milli',
+    '18':        'ether',
+    '24':        'mether',
+    '27':        'gether',
+    '30':        'tether'
+};
+
 export const getMaxPerTxLimit = async (contract) => {
   const maxPerTx = await contract.methods.maxPerTx().call()
   return Web3Utils.fromWei(maxPerTx)
@@ -38,7 +52,11 @@ export const getTotalSupply = async (contract) => {
   const decimals = await contract.methods.decimals().call()
   console.log("totalSupply"+totalSupply);
   console.log("decimals"+decimals);
-  return Web3Utils.fromWei(totalSupply)
+  var decimalsToWeb3unit = web3UtilsRevertunitMap[decimals];
+  if (decimalsToWeb3unit === undefined) {
+      throw new Error('This decimalsToWeb3unit doesn\'t exists, please use the one of the following units' + JSON.stringify(web3UtilsRevertunitMap, null, 2))
+  }
+  return Web3Utils.fromWei(totalSupply,decimalsToWeb3unit)
 }
 
 export const getBalanceOf = async (contract, address) => {
