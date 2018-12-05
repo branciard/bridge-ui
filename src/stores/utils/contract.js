@@ -17,12 +17,12 @@ const web3UtilsRevertunitMap = {
 
 export const getMaxPerTxLimit = async (contract) => {
   const maxPerTx = await contract.methods.maxPerTx().call()
-  return Web3Utils.fromWei(maxPerTx)
+  return Web3Utils.fromWei(maxPerTx,'nano')
 }
 
 export const getMinPerTxLimit = async (contract) => {
   const minPerTx = await contract.methods.minPerTx().call()
-  return Web3Utils.fromWei(minPerTx)
+  return Web3Utils.fromWei(minPerTx,'nano')
 }
 
 export const getCurrentLimit = async (contract) => {
@@ -31,9 +31,9 @@ export const getCurrentLimit = async (contract) => {
   const totalSpentPerDay = await contract.methods.totalSpentPerDay(currentDay).call()
   const maxCurrentDeposit = new BN(dailyLimit).minus(new BN(totalSpentPerDay)).toString(10)
   return {
-    maxCurrentDeposit: Web3Utils.fromWei(maxCurrentDeposit),
-    dailyLimit: Web3Utils.fromWei(dailyLimit),
-    totalSpentPerDay: Web3Utils.fromWei(totalSpentPerDay)
+    maxCurrentDeposit: Web3Utils.fromWei(maxCurrentDeposit,'nano'),
+    dailyLimit: Web3Utils.fromWei(dailyLimit,'nano'),
+    totalSpentPerDay: Web3Utils.fromWei(totalSpentPerDay,'nano')
   }
 }
 
@@ -61,7 +61,14 @@ export const getTotalSupply = async (contract) => {
 
 export const getBalanceOf = async (contract, address) => {
   const balance = await contract.methods.balanceOf(address).call()
-  return Web3Utils.fromWei(balance)
+  const decimals = await contract.methods.decimals().call()
+  console.log("totalSupply"+totalSupply);
+  console.log("decimals"+decimals);
+  var decimalsToWeb3unit = web3UtilsRevertunitMap[decimals]
+  if (decimalsToWeb3unit === undefined) {
+      throw new Error('This decimalsToWeb3unit doesn\'t exists, please use the one of the following units' + JSON.stringify(web3UtilsRevertunitMap, null, 2))
+  }
+  return Web3Utils.fromWei(balance,decimalsToWeb3unit)
 }
 
 export const mintedTotally = async (contract) => {
