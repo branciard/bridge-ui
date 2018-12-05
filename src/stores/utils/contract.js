@@ -62,7 +62,6 @@ export const getTotalSupply = async (contract) => {
 export const getBalanceOf = async (contract, address) => {
   const balance = await contract.methods.balanceOf(address).call()
   const decimals = await contract.methods.decimals().call()
-  console.log("totalSupply"+totalSupply);
   console.log("decimals"+decimals);
   var decimalsToWeb3unit = web3UtilsRevertunitMap[decimals]
   if (decimalsToWeb3unit === undefined) {
