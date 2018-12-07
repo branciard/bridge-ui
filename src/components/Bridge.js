@@ -89,7 +89,8 @@ export class Bridge extends React.Component {
           return txStore.erc677transferAndCall({
             to: homeStore.HOME_BRIDGE_ADDRESS,
             from: web3Store.defaultAccount.address,
-            value: Web3Utils.toWei(amount),
+          //  value: Web3Utils.toWei(amount),
+            value: Web3Utils.toWei(amount,'nano'),
             contract: homeStore.tokenContract,
             tokenAddress: homeStore.tokenAddress
           })
