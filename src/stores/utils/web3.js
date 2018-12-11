@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import Web3Utils from 'web3-utils'
+import BN from 'bignumber.js'
 
 const getWeb3 = () => {
   return new Promise(function (resolve, reject) {
@@ -78,17 +79,23 @@ export const fromDecimals = (number, decimals) => {
   if (decimals == null) {
     decimals = 18;
   }
-  var returnValue = Web3Utils.toBigNumber(number).dividedBy(decimals);
-  return Web3Utils.isBigNumber(number) ? returnValue : returnValue.toString(10);
+  const returnValue = new BN(number).dividedBy(decimals);
+  return isBigNumber(number) ? returnValue : returnValue.toString(10);
 };
+
 
 export const toDecimals = (number, decimals) => {
   if (decimals == null) {
     decimals = 18;
   }
-  var returnValue = Web3Utils.toBigNumber(number).times(decimals);
-  return Web3Utils.isBigNumber(number) ? returnValue : returnValue.toString(10);
+  const returnValue = new BN(number).times(decimals);
+  return isBigNumber(number) ? returnValue : returnValue.toString(10);
 };
+
+const isBigNumber =  (object) => {
+    return (object && (object instanceof BigNumber || (object.constructor && object.constructor.name === 'BigNumber')));
+};
+
 
 
 const processWeb3 = (web3, resolve,  reject) => {
