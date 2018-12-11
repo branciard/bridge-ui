@@ -93,7 +93,7 @@ export const toDecimals = (number, decimals) => {
 };
 
 const isBigNumber =  (object) => {
-    return (object && (object instanceof BigNumber || (object.constructor && object.constructor.name === 'BigNumber')));
+    return (object && (object instanceof BN || (object.constructor && object.constructor.name === 'BigNumber')));
 };
 
 
