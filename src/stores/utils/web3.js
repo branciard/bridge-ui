@@ -74,6 +74,23 @@ export const estimateGas = async (web3, to, gasPrice, from, value, data) =>{
   return Web3Utils.toHex(gas.toString())
 }
 
+export const fromDecimals = (number, decimals) => {
+  if (decimals == null) {
+    decimals = 18;
+  }
+  var returnValue = Web3Utils.toBigNumber(number).dividedBy(decimals);
+  return Web3Utils.isBigNumber(number) ? returnValue : returnValue.toString(10);
+};
+
+export const toDecimals = (number, decimals) => {
+  if (decimals == null) {
+    decimals = 18;
+  }
+  var returnValue = Web3Utils.toBigNumber(number).times(decimals);
+  return Web3Utils.isBigNumber(number) ? returnValue : returnValue.toString(10);
+};
+
+
 const processWeb3 = (web3, resolve,  reject) => {
   web3.version.getNetwork((err, netId) => {
     const netIdName = getNetworkName(netId)
