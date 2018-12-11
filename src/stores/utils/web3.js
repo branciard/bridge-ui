@@ -79,7 +79,7 @@ export const fromDecimals = (number, decimals) => {
   if (decimals == null) {
     decimals = 18;
   }
-  const returnValue = toBigNumber(number).dividedBy(decimals);
+  const returnValue = toBigNumber(number).dividedBy(Math.pow(10, decimals));
   return isBigNumber(number) ? returnValue : returnValue.toString(10);
 };
 
@@ -88,7 +88,7 @@ export const toDecimals = (number, decimals) => {
   if (decimals == null) {
     decimals = 18;
   }
-  const returnValue = toBigNumber(number).times(decimals);
+  const returnValue = toBigNumber(number).times(Math.pow(10, decimals));
   return isBigNumber(number) ? returnValue : returnValue.toString(10);
 };
 
