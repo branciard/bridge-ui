@@ -37,13 +37,13 @@ export const getMessage = (contract, messageHash) => contract.methods.message(me
 
 export const getTotalSupply = async (contract) => {
   const totalSupply = await contract.methods.totalSupply().call()
-  const decimals = contract.methods.decimals().call()
+  const decimals = await contract.methods.decimals().call()
   return fromDecimals(totalSupply,decimals)
 }
 
 export const getBalanceOf = async (contract, address) => {
   const balance = await contract.methods.balanceOf(address).call()
-  const decimals = contract.methods.decimals().call()
+  const decimals = await contract.methods.decimals().call()
   return fromDecimals(balance,decimals)
 }
 
