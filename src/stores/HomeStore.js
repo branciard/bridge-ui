@@ -136,7 +136,7 @@ class HomeStore {
   async getBlockNumber() {
     try {
       this.latestBlockNumber = await getBlockNumber(this.homeWeb3)
-      console.log("update async getBlockNumber to ["+latestBlockNumber+"]");
+      console.log("update async getBlockNumber to ["+this.latestBlockNumber+"]");
     } catch(e){
       console.error(e)
     }
