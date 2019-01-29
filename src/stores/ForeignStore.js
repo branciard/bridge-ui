@@ -169,7 +169,7 @@ class ForeignStore {
       }
 
       if(this.waitingForConfirmation.size) {
-        console.log("FOREIGN : event.returnValues.transactionHash")
+        console.log("FOREIGN : waitingForConfirmation")
         const confirmationEvents = foreignEvents.filter((event) => event.event === "RelayedMessage" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
         console.log("FOREIGN :confirmationEvents"+confirmationEvents);   
         confirmationEvents.forEach(async event => {

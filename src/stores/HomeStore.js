@@ -210,8 +210,7 @@ class HomeStore {
       }
 
       if(this.waitingForConfirmation.size) {
-        console.log("HOME : event.returnValues.transactionHash")
-        console.log(event.returnValues.transactionHash)
+        console.log("HOME : waitingForConfirmation")
         const confirmationEvents = homeEvents.filter((event) => event.event === "AffirmationCompleted" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
         console.log("HOME : confirmationEvents"+confirmationEvents);   
         confirmationEvents.forEach(event => {
