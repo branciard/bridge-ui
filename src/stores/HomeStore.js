@@ -199,16 +199,23 @@ class HomeStore {
 
       let homeEvents = []
       await asyncForEach(events, (async (event) => {
+        console.log("HOME : event arrive")
         if(event.event === "SignedForUserRequest" || event.event === "CollectedSignatures") {
+          console.log("HOME : event is SignedForUserRequest or CollectedSignatures")
+          console.log("HOME : event.returnValues.messageHash "+event.returnValues.messageHash)
+          console.log("HOME : await this.getSignedTx ");
           event.signedTxHash = await this.getSignedTx(event.returnValues.messageHash)
+          console.log("HOME : event.signedTxHash "+event.signedTxHash)
+   
         }
+        console.log("HOME : event push it :"+event)
         homeEvents.push(event)
       }))
 
       if(!this.filter){
         this.events = homeEvents;
       }
-
+      console.log("HOME : this.waitingForConfirmation.size:"+this.waitingForConfirmation.size)
       if(this.waitingForConfirmation.size) {
         console.log("HOME : waitingForConfirmation")
         const confirmationEvents = homeEvents.filter((event) => event.event === "AffirmationCompleted" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
