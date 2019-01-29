@@ -107,8 +107,14 @@ class TxStore {
     web3.eth.getTransactionReceipt(hash, (error, res) => {
       if(res && res.blockNumber){
         if(res.status === true || toBN(res.status).eq(toBN(1))){
+          console.log("status is ok -- "+hash);
+          console.log("this.web3Store.metamaskNet.id -- "+this.web3Store.metamaskNet.id);
+          console.log("this.web3Store.homeNet.id.toString() -- "+this.web3Store.homeNet.id.toString());
           if(this.web3Store.metamaskNet.id === this.web3Store.homeNet.id.toString()) {
+            console.log("this.homeStore.latestBlockNumber -- "+this.homeStore.latestBlockNumber );
+            console.log("res.blockNumber -- "+res.blockNumber);
             const blockConfirmations = this.homeStore.latestBlockNumber - res.blockNumber
+            console.log("blockConfirmations -- "+blockConfirmations);
             if(blockConfirmations >= 8) {
               this.alertStore.setBlockConfirmations(8)
               this.alertStore.setLoadingStepIndex(2)
