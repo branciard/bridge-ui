@@ -210,8 +210,12 @@ class HomeStore {
       }
 
       if(this.waitingForConfirmation.size) {
+        console.log("HOME : event.returnValues.transactionHash")
+        console.log(event.returnValues.transactionHash)
         const confirmationEvents = homeEvents.filter((event) => event.event === "AffirmationCompleted" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
+        console.log("HOME : confirmationEvents"+confirmationEvents);   
         confirmationEvents.forEach(event => {
+          console.log("HOME : AffirmationCompleted for event + "+event);
           this.alertStore.setLoadingStepIndex(3)
           const urlExplorer = this.getExplorerTxUrl(event.transactionHash)
           const unitReceived = getUnit(this.rootStore.bridgeMode).unitHome

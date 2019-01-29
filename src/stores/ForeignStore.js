@@ -169,10 +169,13 @@ class ForeignStore {
       }
 
       if(this.waitingForConfirmation.size) {
+        console.log("FOREIGN : event.returnValues.transactionHash")
         const confirmationEvents = foreignEvents.filter((event) => event.event === "RelayedMessage" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
+        console.log("FOREIGN :confirmationEvents"+confirmationEvents);   
         confirmationEvents.forEach(async event => {
           const TxReceipt = await this.getTxReceipt(event.transactionHash)
           if(TxReceipt && TxReceipt.logs && TxReceipt.logs.length > 1 && this.waitingForConfirmation.size) {
+            console.log("FOREIGN :RelayedMessage for event + "+event);
             this.alertStore.setLoadingStepIndex(3)
             const urlExplorer = this.getExplorerTxUrl(event.transactionHash)
             const unitReceived = getUnit(this.rootStore.bridgeMode).unitForeign
