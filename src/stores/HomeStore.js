@@ -211,12 +211,19 @@ class HomeStore {
         console.log("HOME : event push it :"+event)
         homeEvents.push(event)
       }))
-
+      
+      console.log("HOME :  this.filter is :"+this.filter)
       if(!this.filter){
-        console.log("HOME : into filter because this.filter is :"+this.filter)
+        console.log("HOME : set this.events to  homeEvents:"+homeEvents)
         this.events = homeEvents;
       }
       console.log("HOME : this.waitingForConfirmation.size:"+this.waitingForConfirmation.size)
+
+
+
+
+
+
       if(this.waitingForConfirmation.size) {
         console.log("HOME : waitingForConfirmation")
         const confirmationEvents = homeEvents.filter(
@@ -247,6 +254,21 @@ class HomeStore {
           removePendingTransaction()
         }
       }
+
+      const amountLimitExceededEvents = homeEvents.filter(
+        (event) => {
+          console.log("HOME : homeEvents.filter event is ");
+          console.log(event);
+          console.log("HOME : homeEvents.filter event.event is ");
+          console.log(event.event);
+         return event.event === "AmountLimitExceeded" 
+        })
+
+        amountLimitExceededEvents.forEach(event => {
+          console.log("HOME : amountLimitExceededEvents for event + "+event);
+          this.alertStore.setLoading(false)
+          this.alertStore.pushError(`${hash} connot be proceed : amountLimitExceeded`)
+        })
 
       return homeEvents
     } catch(e) {
@@ -288,6 +310,7 @@ class HomeStore {
 
   @action
   setFilter(value){
+
     this.filter = value
   }
 
