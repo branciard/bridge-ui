@@ -255,6 +255,8 @@ class HomeStore {
         }
       }
 
+
+      //dailyLimit
       const amountLimitExceededEvents = homeEvents.filter(
         (event) => {
           console.log("HOME : homeEvents.filter event is ");
@@ -324,6 +326,14 @@ class HomeStore {
   async getCurrentLimit(){
     try {
       const result = await getCurrentLimit(this.homeBridge,this.tokenDecimals)
+      
+      console.log("getCurrentLimit");
+      console.log("result.maxCurrentDeposit");
+      console.log(result.maxCurrentDeposit);
+      console.log("result.dailyLimit");
+      console.log(result.dailyLimit);
+      console.log("result.totalSpentPerDay");
+      console.log(result.totalSpentPerDay);
       this.maxCurrentDeposit = result.maxCurrentDeposit
       this.dailyLimit = result.dailyLimit
       this.totalSpentPerDay = result.totalSpentPerDay
