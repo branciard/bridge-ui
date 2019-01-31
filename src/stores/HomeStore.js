@@ -267,7 +267,7 @@ class HomeStore {
         amountLimitExceededEvents.forEach(event => {
           console.log("HOME : amountLimitExceededEvents for event + "+event);
           this.alertStore.setLoading(false)
-          this.alertStore.pushError(`${hash} connot be proceed : amountLimitExceeded`)
+          this.alertStore.pushError(`cannot be proceed : amountLimitExceeded`+event)
         })
 
       return homeEvents
