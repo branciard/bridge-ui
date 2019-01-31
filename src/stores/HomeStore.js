@@ -213,12 +213,22 @@ class HomeStore {
       }))
 
       if(!this.filter){
+        console.log("HOME : into filter because this.filter is :"+this.filter)
         this.events = homeEvents;
       }
       console.log("HOME : this.waitingForConfirmation.size:"+this.waitingForConfirmation.size)
       if(this.waitingForConfirmation.size) {
         console.log("HOME : waitingForConfirmation")
-        const confirmationEvents = homeEvents.filter((event) => event.event === "AffirmationCompleted" && this.waitingForConfirmation.has(event.returnValues.transactionHash))
+        const confirmationEvents = homeEvents.filter(
+          (event) => {
+            console.log("HOME : homeEvents.filter event is ");
+            console.log(event);
+            console.log("HOME : homeEvents.filter event.event is ");
+            console.log(event.event);
+            console.log("HOME :event.returnValues.transactionHash is ");
+            console.log(event.returnValues.transactionHash);     
+           return event.event === "AffirmationCompleted" && this.waitingForConfirmation.has(event.returnValues.transactionHash)
+          })
         console.log("HOME : confirmationEvents"+confirmationEvents);   
         confirmationEvents.forEach(event => {
           console.log("HOME : AffirmationCompleted for event + "+event);
